@@ -1,0 +1,19 @@
+{% extends "main.html" %}
+{% block body %}
+    <br>
+    <div class="row">
+        <div class="col">
+            <div class="card card-body">
+                <form method="post" action="" novalidate>
+                    {% csrf_token %}
+                    <h5>Delete Confirmation</h5>
+                    <hr>
+                    <p class="text-danger">Are You Sure That You Want To Delete Customer With Name : "{{ object.name.capitalize }}" ?</p>
+                    <p>Note That This Will Make Products Buyers To  NULL And Order Of This Customer To NULL Also !</p>
+                    <a class="btn btn-secondary btn-block" href="#">Cancel</a>
+                    <button class="btn btn-danger btn-block" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
