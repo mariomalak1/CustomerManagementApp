@@ -4,10 +4,10 @@
     {% include "accounts/status.html" %}
     <div class="row">
      <div class="col-md-5">
-        <h5>CUSTOMERS:</h5>
+        <h5>CUSTOMERS</h5>
         <hr>
          <div class="card card-body">
-            <a class="btn btn-primary btn-block" href = "">Create Customer</a>
+            <a class="btn btn-primary btn-block" href = "{% url "createCustomer" %}">Create Customer</a>
             <table class="table table-sm">
                 <tr>
                     <th></th>
@@ -17,7 +17,7 @@
                 <tbody>
                     {% for customer in customers_list.object_list %}
                         <tr>
-                            <th></th>
+                            <th><a class="btn btn-info" href="{% url "customerPage" customer.id %}">View</a></th>
                             <th>{{ customer.name }}</th>
                             <th>{{ customer.order_set.count }}</th>
                         </tr>
@@ -31,7 +31,6 @@
         <h5>LAST 5 ORDERS</h5>
         <hr>
         <div class="card card-body">
-            <a class="btn btn-primary btn-block" href="">Create Order</a>
             <table class="table table-sm">
                 <thead>
                     <tr>
@@ -48,9 +47,9 @@
                             <th>{{ order.product.name }}</th>
                             <th>{{ order.date_created }}</th>
                             <th>{{ order.status }}</th>
-                            <th> Update </th>
+                            <th> <a class="btn btn-info" href="{% url "updateOrder" order.id %}"> Update </a> </th>
                             <th></th>
-                            <th> Delete </th>
+                            <th> <a class="btn btn-danger" href="{% url "deleteOrder" order.id %}"> Delete </a> </th>
                         </tr>
                     {% endfor %}
                 </tbody>

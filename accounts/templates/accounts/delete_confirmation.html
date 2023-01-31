@@ -8,12 +8,20 @@
                     {% csrf_token %}
                     <h5>Delete Confirmation</h5>
                     <hr>
-                    <p class="text-danger">Are You Sure That You Want To Delete Customer With Name : "{{ object.name.capitalize }}" ?</p>
-                    <p>Note That This Will Make Products Buyers To  NULL And Order Of This Customer To NULL Also !</p>
-                    <a class="btn btn-secondary btn-block" href="#">Cancel</a>
+                    <p class="text-danger">Are You Sure That You Want To Delete {{ object_name }}
+                        {% if afterObjName %}
+                            {{ afterObjName }}
+                        {% endif %} ?
+                    </p>
+                {% if anotherText %}
+                    <p>{{ anotherText }}</p>
+                {% endif %}
+                    <a class="btn btn-secondary btn-block" href="{% url "dashboard" %}">Cancel</a>
                     <button class="btn btn-danger btn-block" type="submit">Delete</button>
                 </form>
             </div>
         </div>
     </div>
 {% endblock %}
+
+

@@ -44,7 +44,16 @@ class Order(models.Model):
     date_created = models.DateTimeField(auto_now_add= True, null = True)
 
     def __str__(self):
-        return "order of " + self.customer.name
+        if self.customer:
+            return "order of " + self.customer.name
+        elif self.product:
+            return "order with " + self.product.name + " Product"
+        else:
+            return "ordered at " + self.date_created
+
+    @property
+    def total_cost(self):
+        return self.product.price * 5
 
 
 class Tag(models.Model):

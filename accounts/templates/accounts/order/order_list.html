@@ -1,0 +1,40 @@
+{% extends "main.html" %}
+{% block body %}
+    <br>
+    <div class="row">
+        <div class="col">
+        <h5>All Orders</h5>
+        <hr>
+         <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Price of Order</th>
+                </tr>
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+
+                            {% if order.customer %}
+                                <td>{{ order.customer.name }}</td>
+                            {% else %}
+                                <td>Customer Deleted</td>
+                            {% endif %}
+
+
+                            {% if order.product %}
+                                <td>{{ order.product.name }}</td>
+                                <td>{{ order.total_cost }}</td>
+                            {% else %}
+                                <td>Product Deleted</td>
+                                <td>{{ 5 }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+{% endblock %}

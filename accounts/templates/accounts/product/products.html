@@ -6,12 +6,15 @@
                 <h5>Products</h5>
              </div>
              <div class="card card-body">
+                <a href="{% url "createProduct" %}" class="btn btn-primary">Create Product</a>
                  <table class="table">
                      <thead>
                         <tr>
                             <th>Product</th>
                             <th>Category</th>
                             <th>Price</th>
+                            <th>Update</th>
+                            <th class="text-danger">Delete</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -20,6 +23,8 @@
                                 <th>{{ product.name }}</th>
                                 <th>{{ product.gategory }}</th>
                                 <th>{{ product.price }}</th>
+                                <th><a href="{% url "updateProduct" product.id %}" class="btn btn-sm btn-info">Update</a></th>
+                                <th><a href="{% url "deleteProduct" product.id %}" class="btn btn-sm btn-danger">Delete</a></th>
                             </tr>
                         {% endfor %}
                      </tbody>
