@@ -10,13 +10,15 @@ class Product(models.Model):
 
     name = models.CharField(max_length=200)
     price = models.PositiveIntegerField()
-    tag = models.ManyToManyField("Tag")
+    tag = models.ManyToManyField("Tag", null=True, blank=True)
     describe = models.TextField(null=True, blank=True)
     gategory = models.CharField(max_length= 200, choices= GATEGORY, null = True)
 
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("products")
 
 
 class Customer(models.Model):

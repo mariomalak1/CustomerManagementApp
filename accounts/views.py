@@ -6,6 +6,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from .forms import OrderForm
 from django.forms import inlineformset_factory
+from .filters import OrderFilter
 
 # Create your views here.
 ########################
@@ -68,7 +69,9 @@ class UpdateProductView(UpdateView):
 def customerPage(request, customer_id):
     needed_customer = get_object_or_404(Customer, id = customer_id)
     orders = needed_customer.order_set.all().order_by("-date_created")
-    return render(request, "accounts/customer/customer.html", {"needed_customer":needed_customer, "orders":orders})
+    filter_orders = OrderFilter(data= request.GET, queryset=orders)
+    orders = filter_orders.qs
+    return render(request, "accounts/customer/customer.html", {"needed_customer":needed_customer, "orders":orders, "filter_orders":filter_orders})
 
 class CreateCustomerView(CreateView, SuccessMessageMixin):
     model = Customer
@@ -185,6 +188,4 @@ def CreateOrderView(request, customer_id):
             return redirect("customerPage", customer.id)
     else:
         FormSet = orderFormSet()
-        print("from else")
-        print(FormSet)
     return render(request, "accounts/order/create_order.html", {"FormSet":FormSet})
