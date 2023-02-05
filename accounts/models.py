@@ -55,6 +55,9 @@ class Order(models.Model):
     def total_cost(self):
         return self.product.price * 5
 
+    def get_absolute_url(self):
+        return reverse("customerPage", kwargs={"customer_id":self.customer.id})
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=200)

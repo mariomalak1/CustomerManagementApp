@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from django.core.paginator import Paginator, PageNotAnInteger, Page
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
+from .forms import OrderForm
+from django.forms import inlineformset_factory
 
 # Create your views here.
 ########################
@@ -106,18 +109,44 @@ class ListOrderView(ListView):
         context["orderPrice"] = 5
         return context
 
-class CreateOrderView(CreateView, SuccessMessageMixin):
-    model = Order
-    fields = ["product", "status"]
-    template_name = "accounts/order/create_order.html"
-    success_message = "Order Created Successfully"
-    success_url = "/accounts/listOrder"
-
-    def form_valid(self, form):
-        customer_ = get_object_or_404(Customer, id = self.kwargs['customer_id'])
-
-        form.instance.customer = customer_
-        return super().form_valid(form)
+# class CreateOrderView(CreateView, SuccessMessageMixin):
+#     model = Order
+#     form_class = OrderFormSet
+#     # fields = ["product", "status"]
+#     template_name = "accounts/order/create_order.html"
+#     success_message = "Orders Created Successfully"
+#     # customer_post_order = super().request.get["customer_id"]
+#     success_url = "/accounts/listOrder"
+#
+#     # def form_valid(self, form):
+#     #     if form.is_valid():
+#     #         count = 0
+#     #         for f in form:
+#     #             for field in ['deal_id','child_name','son_or_daugher','child_age','child_education','child_occupation']:
+#     #                 self.request.session[count + field] = f.cleaned_data[field]
+#     #             count += 1
+#     #
+#     #         self.request.session['children_count'] = count
+#     #
+#     #         for i in range(count):
+#     #             for field in ['deal_id','child_name','son_or_daugher','child_age','child_education','child_occupation']:
+#     #                 print(self.request.session[i + field])
+#     #
+#     #
+#     #         for field in self.fields:
+#     #             self.request.session[field] = form.cleaned_data[field]
+#     #
+#     #         self.request.session['valid_children'] = True
+#     #
+#     #     return super(ChildrenView, self).form_valid(form)
+#
+#
+#     def form_valid(self, form):
+#         customer_ = get_object_or_404(Customer, id=self.kwargs['customer_id'])
+#         for one_form in form.forms:
+#             one_form.instance.customer = customer_
+#             one_form.save()
+#         return super().form_valid(form)
 
 class UpdateOrderView(UpdateView, SuccessMessageMixin):
     model = Order
@@ -145,3 +174,17 @@ class DeleteOrderView(DeleteView, SuccessMessageMixin):
         return context
 
     success_url = "/accounts/"
+
+def CreateOrderView(request, customer_id):
+    customer = get_object_or_404(Customer, id = customer_id)
+    orderFormSet = inlineformset_factory(Customer, Order, fields= ("product","status"), extra=5)
+    if request.method == "POST":
+        FormSet = orderFormSet(request.POST, instance = customer)
+        if FormSet.is_valid():
+            FormSet.save()
+            return redirect("customerPage", customer.id)
+    else:
+        FormSet = orderFormSet()
+        print("from else")
+        print(FormSet)
+    return render(request, "accounts/order/create_order.html", {"FormSet":FormSet})

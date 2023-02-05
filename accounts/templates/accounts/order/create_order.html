@@ -1,8 +1,22 @@
 {% extends "main.html" %}
 {% block body %}
+
     <form method="post" action="" novalidate>
         {% csrf_token %}
-        {{ form }}
+        {{ FormSet.management_form }}
+        {% for form in FormSet %}
+            {{ form }}
+            <hr>
+        {% endfor %}
         <button type="submit" class="btn btn-primary">Create Order</button>
     </form>
+
+{#    <script type="text/javascript">#}
+{#        $('.formset_row').formset({#}
+{#            addText: 'Add Children',#}
+{#            deleteText: 'Remove',#}
+{#            prefix: 'familymember_set'#}
+{#        });#}
+{#    </script>#}
+
 {% endblock %}
