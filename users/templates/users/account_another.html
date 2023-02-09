@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div class = "content-section">
+        <br>
+            <div class = "media">
+                <img alt = "account image"  class="rounded-circle account-img" src = "{{ profile.img.url }}">
+                <div class="media-body">
+                    <h2 class="account-heading">{{ profile.user.username }}</h2>
+                    <p class="text-secondary">{{ profile.user.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% if posts %}
+    <div class="container">
+        <div class = "content-section">
+            <h2> Posts of {{ user_.username }} ({{ page_obj.paginator.count }})</h2>
+            {% for post in posts %}
+                 <div class="content-section">
+                    <h5> <a class="article-title" href="{% url "postDetail" post.id %}">{{ post.title }}</a></h5>
+                 </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+        <div class="container">
+            <div class = "content-section">
+                <h2> He Doesn't create any post yet </h2>
+            </div>
+        </div>
+    {% endif %}
+
+    {% include "pagination_include.html" %}
+
+{% endblock %}

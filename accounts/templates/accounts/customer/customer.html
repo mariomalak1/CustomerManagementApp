@@ -58,6 +58,7 @@
                             <th>Product</th>
                             <th>Category</th>
                             <th>Date Ordered</th>
+                            <th>Date Updated</th>
                             <th>Status</th>
                             <th>Update</th>
                             <th>Remove</th>
@@ -69,6 +70,11 @@
                                 <td>{{ order.product.name }}</td>
                                 <td>{{ order.product.gategory }}</td>
                                 <td>{{ order.date_created }}</td>
+                                {% if order.date_updated %}
+                                    <td>{{ order.date_updated }}</td>
+                                {% else %}
+                                    <td>Not Updated Yet</td>
+                                {% endif %}
                                 <td>{{ order.status }}</td>
                                 <td> <a href="{% url "updateOrder" order.id %}" class="btn btn-sm btn-info"> Update </a> </td>
                                 <td> <a href="{% url "deleteOrder" order.id %}" class="btn btn-sm btn-danger"> Delete </a> </td>

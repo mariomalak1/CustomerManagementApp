@@ -44,6 +44,7 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete= models.SET_NULL, null=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     date_created = models.DateTimeField(auto_now_add= True, null = True)
+    date_updated = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         if self.customer:

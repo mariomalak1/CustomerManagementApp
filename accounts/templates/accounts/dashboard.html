@@ -15,7 +15,7 @@
                     <th>Orders</th>
                 </tr>
                 <tbody>
-                    {% for customer in customers_list.object_list %}
+                    {% for customer in customers_list %}
                         <tr>
                             <th><a class="btn btn-info" href="{% url "customerPage" customer.id %}">View</a></th>
                             <th>{{ customer.name }}</th>
@@ -42,14 +42,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for order in orders_list.object_list %}
+                    {% for order_ in orders_list %}
                         <tr>
-                            <th>{{ order.product.name }}</th>
-                            <th>{{ order.date_created }}</th>
-                            <th>{{ order.status }}</th>
-                            <th> <a class="btn btn-info" href="{% url "updateOrder" order.id %}"> Update </a> </th>
+                            <th>{{ order_.product.name }}</th>
+                            <th>{{ order_.date_created }}</th>
+                            <th>{{ order_.status }}</th>
+                            <th> <a class="btn btn-info" href="{% url "updateOrder" order_.id %}"> Update </a> </th>
                             <th></th>
-                            <th> <a class="btn btn-danger" href="{% url "deleteOrder" order.id %}"> Delete </a> </th>
+                            <th> <a class="btn btn-danger" href="{% url "deleteOrder" order_.id %}"> Delete </a> </th>
                         </tr>
                     {% endfor %}
                 </tbody>
